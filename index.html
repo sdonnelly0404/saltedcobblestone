@@ -148,6 +148,7 @@ footer { background: var(--espresso); padding: 3rem; display: flex; justify-cont
     <li><a href="#destinations">Destinations</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
+<li><a href="#travel-history">My travels</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#book">Book a call</a></li>
     <li><a href="#contact" class="nav-cta">Start planning</a></li>
@@ -295,6 +296,157 @@ footer { background: var(--espresso); padding: 3rem; display: flex; justify-cont
 </section>
 
 
+
+<section id="travel-history" style="background: #F5EFE6; padding: 6rem 3rem;">
+  <div style="max-width: 1000px; margin: 0 auto;">
+    <div style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:#A0856A;margin-bottom:0.75rem;text-align:center;">A life well traveled</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:#3D2B1F;text-align:center;margin-bottom:0.75rem;">The journeys that made me</h2>
+    <p style="text-align:center;max-width:580px;margin:0 auto 0.75rem;font-size:1rem;line-height:1.85;color:#7A6555;">From the cobblestone streets of Bruges that inspired this brand, to Caribbean all-inclusives, European adventures, Disney magic, and spa escapes.</p>
+    <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:#A0856A;margin-bottom:3rem;">Bruges, 2024 &mdash; the trip that started it all.</p>
+
+    <div id="th-filters" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:3rem;"></div>
+    <div id="th-grid"></div>
+
+    <div style="text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid #D9C9B0;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:#7A6555;">And there&rsquo;s always another trip on the horizon&hellip;</p>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var CREAM = '#FEFCF9';
+  var ESPRESSO = '#3D2B1F';
+  var TERRA = '#A0856A';
+  var SAND = '#D9C9B0';
+  var MUTED = '#7A6555';
+
+  var categoryColors = {
+    europe: '#A0856A',
+    caribbean: '#1A3A4A',
+    disney: '#7F77DD',
+    spa: '#1D9E75',
+    city: '#888780',
+    resort: '#D85A30',
+    cruise: '#378ADD',
+    mountain: '#639922'
+  };
+
+  var trips = [
+    { year:'2026', tag:'Caribbean Cruise', title:'Norwegian Joy', sub:'Dominican Republic · St. Thomas · British Virgin Islands', detail:'February', cat:'cruise' },
+    { year:'2026', tag:'Mountain Luxury', title:'Four Seasons Whistler', sub:'Whistler, BC, Canada', detail:'February', cat:'mountain' },
+    { year:'2026', tag:'City Stay', title:'Fairmont Vancouver Airport', sub:'Vancouver, BC, Canada', detail:'February', cat:'city' },
+    { year:'2026', tag:'Resort', title:'Ritz-Carlton Grande Lakes', sub:'Orlando, FL', detail:'February', cat:'resort' },
+    { year:'2025', tag:'Disney Magic', title:"Disney's Beach Club + Cruise Line", sub:'Walt Disney World, FL', detail:'September', cat:'disney' },
+    { year:'2025', tag:'City Stay', title:'The Venetian Resort', sub:'Las Vegas, NV', detail:'October', cat:'city' },
+    { year:'2025', tag:'Wellness Escape', title:'Mayflower Inn & Spa', sub:'Washington, CT — Auberge Collection', detail:'November', cat:'spa' },
+    { year:'2025', tag:'Wellness Escape', title:'Miraval Berkshires', sub:'Lenox, MA', detail:'November', cat:'spa' },
+    { year:'2025', tag:'Boutique Hotel', title:'Hotel Bardo', sub:'Savannah, GA', detail:'November', cat:'city' },
+    { year:'2025', tag:'City Luxury', title:'Mandarin Oriental', sub:'Boston, MA', detail:'April', cat:'city' },
+    { year:'2025', tag:'Beach Resort', title:'W South Beach', sub:'Miami Beach, FL', detail:'March', cat:'resort' },
+    { year:'2025', tag:'Mexico', title:'Los Cabos', sub:'Cabo San Lucas, Mexico', detail:'April', cat:'resort' },
+    { year:'2024', tag:'Europe — The one that started it all', title:'Bruges, Belgium', sub:'The cobblestone streets that inspired this brand', detail:'August — our hero image', cat:'europe', featured:true },
+    { year:'2024', tag:'Europe City', title:'Grand Hyatt Barcelona', sub:'Barcelona, Spain', detail:'December — Delta miles redemption', cat:'europe' },
+    { year:'2024', tag:'Europe City', title:'London + Eurostar', sub:'London, UK — via Paris', detail:'August', cat:'europe' },
+    { year:'2024', tag:'Europe — France', title:'Dinner in Lille', sub:'Chez Max Bistrot Lillois', detail:'August', cat:'europe' },
+    { year:'2024', tag:'Europe — Netherlands', title:'Amsterdam', sub:'10 Taste Food Tour', detail:'August', cat:'europe' },
+    { year:'2024', tag:'City Stay', title:'Encore at Wynn', sub:'Las Vegas, NV', detail:'October', cat:'city' },
+    { year:'2024', tag:'Beach Resort', title:'Palm Beach Marriott Singer Island', sub:'Singer Island, FL', detail:'April', cat:'resort' },
+    { year:'2024', tag:'Beach Resort', title:'W South Beach', sub:'Miami Beach, FL', detail:'February', cat:'resort' },
+    { year:'2023', tag:'Caribbean NYE', title:'Grand Hyatt Baha Mar + SLS', sub:'Nassau, Bahamas', detail:'December / NYE', cat:'caribbean' },
+    { year:'2023', tag:'Spa Weekend', title:'Mirbeau Inn & Spa', sub:'Rhinebeck, NY', detail:'July', cat:'spa' },
+    { year:'2023', tag:'Mexico Boutique', title:'La Zebra, Colibri Hotels', sub:'Tulum, Mexico', detail:'February', cat:'resort' },
+    { year:'2023', tag:'City Stay', title:'Thompson Nashville', sub:'Nashville, TN', detail:'January', cat:'city' },
+    { year:'2022', tag:'Disney Magic — 50th Anniversary', title:"Disney's Polynesian Village Resort", sub:'Walt Disney World, FL', detail:'September', cat:'disney' },
+    { year:'2022', tag:'City NYE', title:'Hyatt Centric Downtown Nashville', sub:'Nashville, TN', detail:'December / NYE', cat:'city' },
+    { year:'2021', tag:'Disney Magic', title:"Disney's Grand Floridian Resort", sub:'Walt Disney World, FL', detail:'September', cat:'disney' },
+    { year:'2021', tag:'Caribbean All-Inclusive', title:'Finest Punta Cana', sub:'Punta Cana, Dominican Republic', detail:'Nov/Dec — Club Beachfront Suite', cat:'caribbean' },
+    { year:'2021', tag:'Caribbean NYE', title:'Paradisus Grand Cana', sub:'Punta Cana, Dominican Republic', detail:'December / NYE', cat:'caribbean' },
+    { year:'2021', tag:'City Luxury', title:'Four Seasons New York Downtown', sub:'New York City, NY', detail:'September', cat:'city' },
+    { year:'2021', tag:'Resort', title:'Ponte Vedra Inn & Club', sub:'Ponte Vedra Beach, FL', detail:'February', cat:'resort' },
+    { year:'2019', tag:'Mexico All-Inclusive', title:'Finest Playa Mujeres', sub:'Playa Mujeres, Mexico', detail:'January', cat:'caribbean' },
+    { year:'2019', tag:'Mexico Boutique', title:'Sanara Tulum', sub:'Tulum, Mexico', detail:'February', cat:'resort' },
+    { year:'2019', tag:'New England', title:'Newport Harbor Hotel & Marina', sub:'Newport, RI', detail:'May', cat:'city' },
+    { year:'2018', tag:'Caribbean Resort', title:'Franklyn D Resort & Spa', sub:'Montego Bay, Jamaica', detail:'January', cat:'caribbean' },
+    { year:'2018', tag:'NYC Iconic', title:'Waldorf Astoria', sub:'New York City, NY', detail:'October', cat:'city' },
+    { year:'2017', tag:'City Luxury', title:'Mandarin Oriental Las Vegas', sub:'Las Vegas, NV', detail:'August', cat:'city' },
+    { year:'2017', tag:'Southern Charm', title:'Savannah, GA', sub:'Homewood Suites', detail:'May', cat:'city' },
+    { year:'2016', tag:'Wine Country', title:'Duchamp Hotel', sub:'Healdsburg, CA', detail:'July', cat:'resort' },
+    { year:'2015', tag:'Caribbean Resort', title:'Hilton Rose Hall Resort & Spa', sub:'Montego Bay, Jamaica', detail:'February', cat:'caribbean' },
+    { year:'2015', tag:'Florida Coast', title:'One Ocean Resort', sub:'Atlantic Beach, FL', detail:'March', cat:'resort' },
+    { year:'2015', tag:'Europe — France', title:'Paris', sub:"Montmartre Art Walk · Musée d'Orsay · Père Lachaise", detail:'October', cat:'europe' },
+    { year:'2014', tag:'Europe — Greece', title:'Kivotos Luxury Boutique Hotel', sub:'Mykonos & Santorini + Athens', detail:'May — Segway tour of Athens', cat:'europe' },
+    { year:'2014', tag:'Wine Country', title:'Hotel Les Mars + Hilton Sonoma', sub:'Healdsburg / Sonoma, CA', detail:'April', cat:'resort' },
+    { year:'2014', tag:'Caribbean', title:'El San Juan Resort & Casino', sub:'San Juan, Puerto Rico', detail:'February', cat:'caribbean' }
+  ];
+
+  var years = ['2026','2025','2024','2023','2022','2021','2019','2018','2017','2016','2015','2014'];
+  var currentFilter = 'all';
+
+  var filterContainer = document.getElementById('th-filters');
+  var grid = document.getElementById('th-grid');
+
+  function btnStyle(active) {
+    return 'font-family:Jost,sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.45rem 1.1rem;border-radius:99px;cursor:pointer;transition:all 0.2s;border:1px solid ' +
+      (active ? ESPRESSO + ';background:' + ESPRESSO + ';color:#F5EFE6' : SAND + ';background:transparent;color:' + MUTED);
+  }
+
+  function renderFilters() {
+    filterContainer.innerHTML = '';
+    var allBtn = document.createElement('button');
+    allBtn.textContent = 'All years';
+    allBtn.style.cssText = btnStyle(currentFilter === 'all');
+    allBtn.onclick = function() { currentFilter = 'all'; render(); };
+    filterContainer.appendChild(allBtn);
+
+    years.forEach(function(y) {
+      var btn = document.createElement('button');
+      btn.textContent = y;
+      btn.style.cssText = btnStyle(currentFilter === y);
+      btn.onclick = function() { currentFilter = y; render(); };
+      filterContainer.appendChild(btn);
+    });
+  }
+
+  function cardHTML(t) {
+    var color = categoryColors[t.cat] || TERRA;
+    var bg = t.featured ? ESPRESSO : CREAM;
+    var titleColor = t.featured ? '#F5EFE6' : ESPRESSO;
+    var subColor = t.featured ? 'rgba(217,201,176,0.8)' : MUTED;
+    var tagColor = t.featured ? TERRA : TERRA;
+    return '<div style="background:' + bg + ';border-radius:12px;padding:1.1rem 1.25rem;border-left:3px solid ' + color + ';border-top:0.5px solid rgba(0,0,0,0.08);border-right:0.5px solid rgba(0,0,0,0.08);border-bottom:0.5px solid rgba(0,0,0,0.08);transition:transform 0.2s;" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'none\'">' +
+      '<div style="font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:' + tagColor + ';margin-bottom:0.4rem;">' + t.tag + '</div>' +
+      '<div style="font-family:Cormorant Garamond,serif;font-size:1.1rem;font-weight:400;color:' + titleColor + ';line-height:1.2;margin-bottom:0.3rem;">' + t.title + '</div>' +
+      '<div style="font-size:0.82rem;color:' + subColor + ';margin-bottom:0.2rem;line-height:1.4;">' + t.sub + '</div>' +
+      '<div style="font-size:0.72rem;color:' + (t.featured ? 'rgba(217,201,176,0.65)' : TERRA) + ';letter-spacing:0.04em;">' + t.detail + '</div>' +
+      '</div>';
+  }
+
+  function render() {
+    renderFilters();
+    grid.innerHTML = '';
+    var filtered = currentFilter === 'all' ? years : [currentFilter];
+    filtered.forEach(function(y) {
+      var yearTrips = trips.filter(function(t) { return t.year === y; });
+      if (!yearTrips.length) return;
+      var block = document.createElement('div');
+      block.style.cssText = 'margin-bottom:3rem;';
+      var label = document.createElement('div');
+      label.style.cssText = 'font-family:Cormorant Garamond,serif;font-size:2.5rem;font-weight:300;color:' + ESPRESSO + ';margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:1px solid ' + SAND + ';';
+      label.textContent = y;
+      block.appendChild(label);
+      var cards = document.createElement('div');
+      cards.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;';
+      yearTrips.forEach(function(t) { cards.innerHTML += cardHTML(t); });
+      block.appendChild(cards);
+      grid.appendChild(block);
+    });
+  }
+
+  render();
+})();
+</script>
+
 <section id="faq" style="background: var(--white); padding: 6rem 3rem;">
   <div style="max-width: 780px; margin: 0 auto;">
     <div class="section-eyebrow" style="text-align:center;">Got questions?</div>
@@ -318,7 +470,7 @@ footer { background: var(--espresso); padding: 3rem; display: flex; justify-cont
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a">
-          <p>Booking online is easy — but getting it <em>right</em> is hard. I know which hotel room has the best view, which resort is actually worth the price, and which destinations are magical in October versus exhausting. I also have access to perks, upgrades, and amenities that you simply can't get on Expedia or Google. And when something goes sideways — a flight delay, a room that isn't ready — you have a real person in your corner fighting for you, not a chatbot.</p>
+          <p>Booking online is easy — but getting it <em>right</em> is hard. I know which hotel room has the best view, which resort is actually worth the price, and which destinations are magical in October versus exhausting. I also have access to perks, upgrades, and amenities that you simply can't get on Expedia or Google. And when something goes sideways — a room that isn't what you expected, a transfer that falls through — you have a real person in your corner fighting for you, not a chatbot.</p>
         </div>
       </div>
 
@@ -358,7 +510,7 @@ footer { background: var(--espresso); padding: 3rem; display: flex; justify-cont
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a">
-          <p>This is honestly one of the biggest reasons to work with a travel advisor. If a hotel has an issue, a transfer falls through, or plans need to change — you call me, not a customer service line. I have direct relationships with my supplier partners and I'll go to bat for you immediately. You're never on your own.</p>
+          <p>This is honestly one of the biggest reasons to work with a travel advisor. If a hotel has an issue, a resort room isn't ready, or an excursion needs to change — you call me, not a customer service line. I have direct relationships with my supplier partners and I'll go to bat for you immediately. You're never on your own.</p>
         </div>
       </div>
 
